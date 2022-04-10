@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class GameManager : MonoBehaviour
         MessageCenter.Instance.AddListerner(eMsgType.LanguageChange, ChangeLaguage);
         MessageCenter.Instance.AddListerner(eMsgType.PlayerDead, OnPlayerDead);
         ShowUI("UI_LogIn");
+        Application.targetFrameRate = 144;
     }
 
     private float passedTime = 0;

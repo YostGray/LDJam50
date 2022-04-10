@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-interface ICouldInvestage
+public interface ICouldInvestage
 {
-    public void Investage();
+    public void Investage(PlayerController playerController);
 }
 
 public enum InvestageType

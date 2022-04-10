@@ -34,7 +34,7 @@ public class Refrigerator : MonoBehaviour, ICouldInvestage
         doorAnimator.SetBool("Open", false);
     }
 
-    public void Investage()
+    public void Investage(PlayerController playerController)
     {
         bool isOpen = doorAnimator.GetBool("Open");
         if (!isOpen)

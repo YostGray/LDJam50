@@ -17,18 +17,25 @@ public class WorldCtrl
 
     public Action<WorldCtrl> updateAction { set; get; }
 
+    public List< Process> processDic = new List<Process>();
 
     public void SetPlayerData(PlayerData playerData)
     {
         this.playerData = playerData;
     }
 
+    //每秒更新一次
     public void WorldUpdate(float totalPassedTime)
     {
         timePassed = totalPassedTime;
         if (timePassed > DayTime * dayNum)
         {
             dayNum++;
+        }
+
+        foreach (Process process in processDic)
+        {
+            RunProcess(process);
         }
 
         if (playerData != null)

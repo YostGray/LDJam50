@@ -18,4 +18,6 @@ public class PlayerAttribute : MonoBehaviour
     public bool isClimbingLadder = false;
     public float Climbing2LadderCenterSpeed = 5.0f;
     public float ClimbingLadderSpeed = 5.0f;
+
+    public Dictionary<System.Type, BagItemBase> BagPackage = new Dictionary<System.Type, BagItemBase>();
 }

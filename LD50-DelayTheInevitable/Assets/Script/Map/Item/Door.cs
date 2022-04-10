@@ -67,7 +67,7 @@ public class Door : MonoBehaviour, ICouldInvestage
 		realCollider.enabled = true;
 	}
 
-    public void Investage()
+    public void Investage(PlayerController playerController)
     {
         
     }

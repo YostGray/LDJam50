@@ -5,19 +5,21 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-class PlayerController: MonoBehaviour
+public class PlayerController: MonoBehaviour
 {
     public GameObject Pop1, Pop2, Pop3;//三种气泡
 
 
     public bool isOperatingUI = false;
     private PlayerAction playerAction;
+    private PlayerAttribute playerAttribute;
     public Ladder ladder2Climb { set; get; }//要爬的梯子
     private ICouldInvestage couldInvestageItem { set; get; }//目前可以调查的物品
 
     public void Awake()
     {
         playerAction = gameObject.GetComponent<PlayerAction>();
+        playerAttribute = gameObject.GetComponent<PlayerAttribute>();
     }
 
     public void SetCouldInvestageItem(ICouldInvestage could, InvestageType type)
@@ -58,13 +60,32 @@ class PlayerController: MonoBehaviour
         else if (Input.GetKeyUp(KeyCode.Alpha2))
             Time.timeScale = 1;
 
+        bool bag = Input.GetKeyDown(KeyCode.B);//背包
+        bool menu = Input.GetButtonDown("Menu");
+        bool Cancel = Input.GetButtonDown("Cancel");
+        bool ok = Input.GetButtonDown("OK");
+
+
+        if (bag)
+        {
+            GameManager gm = FindObjectOfType<GameManager>();
+            if (isOperatingUI)
+            {
+                gm.HideUI("UI_Des");
+                isOperatingUI = false;
+                return;
+            }
+            UI_Des uiDes = gm.ShowUI("UI_Des").GetComponent<UI_Des>();
+            uiDes.ShowItemDic(playerAttribute.BagPackage);
+            isOperatingUI = true;
+            return;
+        }
+
         if (isOperatingUI)
         {
             return;
         }
-        bool menu = Input.GetButtonDown("Menu");
-        bool Cancel = Input.GetButtonDown("Cancel");
-        bool ok = Input.GetButtonDown("OK");
+
 
         bool jump = Input.GetButtonDown("Jump");
 
@@ -76,7 +97,7 @@ class PlayerController: MonoBehaviour
 
         if (couldInvestageItem != null && ok)
         {
-            couldInvestageItem.Investage();
+            couldInvestageItem.Investage(this);
             return;
         }
 
@@ -125,5 +146,44 @@ class PlayerController: MonoBehaviour
         }
 
 
+    }
+
+    public void AddBagItem(BagItemBase bagItemBase, int num)
+    {
+        var type = bagItemBase.GetType();
+        var BagPackage = playerAttribute.BagPackage;
+        if (BagPackage.ContainsKey(type))
+        {
+            BagPackage[type].num += num;
+        }
+        else
+        { 
+            bagItemBase.num = num;
+            BagPackage.Add(type, bagItemBase);
+        }
+    }
+    public bool RemoveBagItem(System.Type type, int num)
+    {
+        //if (!type.IsAssignableFrom(typeof(BagItemBase)))
+        //{
+        //    Debug.LogError("不是背包物品");
+        //    return false;
+        //}
+        var BagPackage = playerAttribute.BagPackage;
+        if (BagPackage.ContainsKey(type))
+        {
+            int currentValue = BagPackage[type].num;
+            if (currentValue > num)
+            {
+                BagPackage[type].num -= num;
+                return true;
+            }
+            else if (currentValue == num)
+            {
+                BagPackage.Remove(type);
+                return true;
+            }
+        }
+        return false;
     }
 }
