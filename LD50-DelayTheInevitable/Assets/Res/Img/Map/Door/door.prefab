@@ -276,8 +276,8 @@ MonoBehaviour:
     m_Bits: 524288
   doorAnimator: {fileID: 1118340988019978026}
   realCollider: {fileID: 2105416447}
-  open: {fileID: 0}
-  canNotOpen: {fileID: 0}
+  open: {fileID: 8300000, guid: c81e426a5c91a0240a767a8de8346427, type: 3}
+  canNotOpen: {fileID: 8300000, guid: 3585f19703e57634e9e6799a57758136, type: 3}
   isLocked: 0
 --- !u!61 &5515108619706684990
 BoxCollider2D:

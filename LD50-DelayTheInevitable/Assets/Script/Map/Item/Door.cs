@@ -47,6 +47,7 @@ public class Door : MonoBehaviour, ICouldInvestage
 		else
 		{
 			doorAnimator.SetBool("open", true);
+			palyOpenAudio();
 		}
 	}
 
