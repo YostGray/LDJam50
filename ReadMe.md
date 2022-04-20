@@ -1,2 +1,3 @@
 LD50JamGame
-Not Finish Yet.
+
+至少可以玩了（大概
